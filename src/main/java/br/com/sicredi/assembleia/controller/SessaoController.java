@@ -12,17 +12,18 @@ import br.com.sicredi.assembleia.dto.SessaoResponseDTO;
 @RestController
 public class SessaoController {
 
-	@Value("${sessao.api.url}")
-	private String sessaoApiUrl;
+  @Value("${sessao.api.url}")
+  private String sessaoApiUrl;
 
-	private RestTemplate restTemplate;
+  private RestTemplate restTemplate;
 
-	public SessaoController(RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
-	}
+  public SessaoController(RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
+  }
 
-	@PostMapping("/sessoes")
-	public SessaoResponseDTO criarSessao(@RequestBody SessaoRequestDTO sessaoDTO) {
-		return restTemplate.postForObject(sessaoApiUrl + "/sessoes", sessaoDTO, SessaoResponseDTO.class);
-	}
+  @PostMapping("/sessoes")
+  public SessaoResponseDTO criarSessao(@RequestBody SessaoRequestDTO sessaoDTO) {
+    return restTemplate.postForObject(
+        sessaoApiUrl + "/sessoes", sessaoDTO, SessaoResponseDTO.class);
+  }
 }
