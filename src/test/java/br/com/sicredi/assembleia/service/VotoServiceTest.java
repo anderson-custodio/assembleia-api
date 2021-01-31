@@ -22,43 +22,41 @@ import br.com.sicredi.assembleia.repository.VotoRepository;
 @ExtendWith(MockitoExtension.class)
 public class VotoServiceTest {
 
-	@InjectMocks
-	private VotoService votoService;
+  @InjectMocks private VotoService votoService;
 
-	@Mock
-	private VotoRepository votoRepository;
+  @Mock private VotoRepository votoRepository;
 
-	@Mock
-	private SessaoService sessaoService;
+  @Mock private SessaoService sessaoService;
 
-	@BeforeEach
-	public void init() {
-		buscarSessaoMock();
-		salvarVotoMock();
-	}
+  @BeforeEach
+  public void init() {
+    buscarSessaoMock();
+    salvarVotoMock();
+  }
 
-	@Test
-	void testNovoVoto() {
-		VotoRequestDTO dto = new VotoRequestDTO();
-		dto.setCpf("19839091069");
-		dto.setPautaId(-1L);
-		dto.setVoto(true);
+  @Test
+  void testNovoVoto() {
+    VotoRequestDTO dto = new VotoRequestDTO();
+    dto.setCpf("19839091069");
+    dto.setPautaId(-1L);
+    dto.setVoto(true);
 
-		Voto voto = votoService.criarVoto(dto);
+    Voto voto = votoService.criarVoto(dto);
 
-		assertNotNull(voto);
-		verify(votoRepository, times(1)).save(voto);
-	}
+    assertNotNull(voto);
+    verify(votoRepository, times(1)).save(voto);
+  }
 
-	private void salvarVotoMock() {
-		Mockito.lenient().when(votoRepository.save(any(Voto.class))).then(AdditionalAnswers.returnsFirstArg());
-	}
+  private void salvarVotoMock() {
+    Mockito.lenient()
+        .when(votoRepository.save(any(Voto.class)))
+        .then(AdditionalAnswers.returnsFirstArg());
+  }
 
-	private void buscarSessaoMock() {
-		SessaoResponseDTO dto = new SessaoResponseDTO();
-		dto.setId(-1L);
+  private void buscarSessaoMock() {
+    SessaoResponseDTO dto = new SessaoResponseDTO();
+    dto.setId(-1L);
 
-		Mockito.lenient().when(sessaoService.buscarSessao(-1L)).thenReturn(dto);
-	}
-
+    Mockito.lenient().when(sessaoService.buscarSessao(-1L)).thenReturn(dto);
+  }
 }
