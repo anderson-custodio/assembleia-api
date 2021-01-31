@@ -34,8 +34,15 @@ public class PautaService {
     return pautaRepository.findById(pautaId);
   }
 
-  public Pauta atualizarStatus(Pauta pauta, Boolean ativa) {
-    pauta.setAtiva(ativa);
-    return pautaRepository.save(pauta);
+  public Optional<Pauta> desativarPauta(Long pautaId) {
+    Optional<Pauta> pautaOpt = buscarPauta(pautaId);
+
+    if (pautaOpt.isPresent()) {
+      Pauta pauta = pautaOpt.get();
+      pauta.setAtiva(false);
+      return Optional.of(pautaRepository.save(pauta));
+    }
+
+    return Optional.empty();
   }
 }
